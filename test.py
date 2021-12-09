@@ -15,11 +15,6 @@ def image_show(image, nrows=1, ncols=1, cmap='gray'):
     return fig, ax
 
 
-def hist(image, bins=32):
-    fig, ax = plt.subplots(1, 1)
-    ax.hist(image.ravel(), bins=bins, range=[0, 256])
-    ax.set_xlim(0, 256)
-
 def circle_points(resolution, center, radius):    
     """
     Generate points which define a circle on an image.Centre refers to the centre of the circle
@@ -30,33 +25,6 @@ def circle_points(resolution, center, radius):
     
     return np.array([c, r]).T# Exclude last point because a closed path should not have duplicate points
 
-
-def multiotsu(image):
-    thresholds = filters.threshold_multiotsu(image, classes=3)
-
-    # Using the threshold values, we generate the three regions.
-    regions = np.digitize(image, bins=thresholds)
-
-    fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(10, 3.5))
-
-    # Plotting the original image.
-    ax[0].imshow(image, cmap='gray')
-    ax[0].set_title('Original')
-    ax[0].axis('off')
-
-    # Plotting the histogram and the two thresholds obtained from
-    # multi-Otsu.
-    ax[1].hist(image.ravel(), bins=255)
-    ax[1].set_title('Histogram')
-    for thresh in thresholds:
-        ax[1].axvline(thresh, color='r')
-
-    # Plotting the Multi Otsu result.
-    ax[2].imshow(regions, cmap='jet')
-    ax[2].set_title('Multi-Otsu result')
-    ax[2].axis('off')
-
-    plt.subplots_adjust()
 
 
 
